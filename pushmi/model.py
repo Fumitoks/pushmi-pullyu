@@ -5,6 +5,8 @@ from torch.utils.data import DataLoader, random_split
 from torch.nn import functional as F
 from torchvision.datasets import MNIST
 from torchvision import datasets, transforms
+from pytorch_lightning.callbacks import ModelCheckpoint
+from pytorch_lightning.loggers import WandbLogger
 import os
 from collections import Counter
 import numpy as np
@@ -19,13 +21,22 @@ def get_cluster_acc(true_labels, predicted_labels):
 
 class TestMnist(pl.LightningModule):
 
-    def __init__(self, batch_size, loss_type='distance', relu_slope = 0., constant_split_val=False):
+    def __init__(self, batch_size, lr = 5e-5, loss_type='distance', relu_slope = 0., constant_split_val=False):
         super(TestMnist, self).__init__()
         # mnist images are (1, 28, 28) (channels, width, height) 
         self.batch_size = batch_size
+        self.lr = lr
+        self.loss_type = loss_type
+        self.relu_slope = relu_slope
+        self.name = '_'.join([
+            loss_type,
+            str(batch_size),
+            str(f'{lr:.0e}'),
+            str(relu_slope)
+            ])
+
         self.num_classes = 10
         self.activation = nn.LeakyReLU(negative_slope=relu_slope)
-        self.loss_type = loss_type
         self.constant_split_val = constant_split_val
         self.val_results = list()
         self.train_transform = transforms.Compose([
@@ -35,27 +46,26 @@ class TestMnist(pl.LightningModule):
                     #transforms.ToTensor(),
                     #transforms.Normalize((0.1307,), (0.3081,))
                     ])
+        self.custom_step = 0
+        self.init_layers()
 
+    def init_layers(self):
         self.layer1 = nn.Sequential(
             nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1),
             self.activation,
             nn.MaxPool2d(kernel_size=2, stride=2))
-
         self.layer2 = nn.Sequential(
             nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
             self.activation,
-            nn.MaxPool2d(kernel_size=2, stride=2))
-        
+            nn.MaxPool2d(kernel_size=2, stride=2))            
         self.layer3 = nn.Sequential(
             nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1),
             self.activation,
-            nn.MaxPool2d(kernel_size=2, stride=2))
-        
+            nn.MaxPool2d(kernel_size=2, stride=2))            
         self.layer4 = nn.Sequential(
             nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1),
             self.activation,
             nn.MaxPool2d(kernel_size=2, stride=2))
-
         self.fc_intermediate = 512
         self.fc1 = nn.Linear(1 * 1 * 512, self.fc_intermediate)
         self.fc2 = nn.Linear(self.fc_intermediate, 10)
@@ -65,12 +75,9 @@ class TestMnist(pl.LightningModule):
         out = self.layer2(out)
         out = self.layer3(out)
         out = self.layer4(out)
-        #print(out.shape)
-        out = out.reshape(out.size(0), -1)
-        
+        out = out.reshape(out.size(0), -1)       
         out = self.fc1(out)
-        self.activation(out),
-
+        out = self.activation(out)
         out = self.fc2(out)
         out = torch.softmax(out, dim=1)
         return out
@@ -106,6 +113,14 @@ class TestMnist(pl.LightningModule):
         loss_dict = self.full_loss(logits, 'train')
         self.log_dict(loss_dict, prog_bar=True)
         loss = loss_dict['train_loss']
+        
+        # wandb logs
+        self.custom_step += batch[0].shape[0]
+        self.logger.experiment.log({
+            'train_loss' : loss,
+            'epoch' : self.current_epoch
+            }, step = self.custom_step)
+
         return loss
 
     def get_predictions(self, batch):
@@ -168,8 +183,10 @@ class TestMnist(pl.LightningModule):
         self.val_results.append({'true_labels' : true_labels, 'predicted_labels' : predicted_labels, 'logits' : logits, 'acc' : acc})
         #print(val_results)
         #print(Counter(true_labels.cpu().detach().numpy()))
-        d = {'val_loss' : avg_loss, 'val_acc' : acc}
-        self.log_dict(d, prog_bar=True)
+        log_dict = {'val_loss' : avg_loss, 'val_acc' : acc}
+        # wandb logger
+        self.logger.experiment.log(log_dict, step = self.custom_step)
+        self.log_dict(log_dict, prog_bar=True)
 
     def prepare_data(self):
         # transforms for images
@@ -197,23 +214,49 @@ class TestMnist(pl.LightningModule):
         return DataLoader(self,mnist_test, batch_size=self.batch_size)
 
     def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=5e-5)
+        optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
         return optimizer
 
 # train
-def train_model(batch_size = 100, max_epochs = 30, deterministic=False):
-    model = TestMnist(batch_size, constant_split_val = deterministic)
-    trainer = pl.Trainer(deterministic=deterministic, gpus=1, max_epochs = max_epochs, progress_bar_refresh_rate=20, accumulate_grad_batches=1)#, gradient_clip_val = 0.1)
+def train_model(max_epochs = 30, batch_size = 100, lr = 5e-5, loss_type = 'distance', relu_slope = 0., deterministic=False):
+    model = TestMnist(batch_size, lr=lr, loss_type=loss_type, relu_slope=relu_slope, constant_split_val = deterministic)
+
+    model_save_dir = '/content/gdrive/My Drive/PUSHMI/saved_models/'
+    model_name = model.name
+    # saving checkpoint
+    checkpoint_callback = ModelCheckpoint(
+        dirpath = model_save_dir + model_name,
+        filename = 'model',
+        save_top_k = 1,
+        verbose = True,
+        monitor = 'val_loss',
+        mode = 'min'
+    )
+    # weight&biases logger used by trainer
+    wandb_logger = WandbLogger(
+        name = model_name,
+        project = 'pushmi'
+    )
+    trainer = pl.Trainer(
+        deterministic = deterministic,
+        gpus = 1,
+        max_epochs = max_epochs, 
+        progress_bar_refresh_rate = 20, 
+        accumulate_grad_batches = 1,
+        checkpoint_callback = checkpoint_callback, 
+        logger = wandb_logger
+        ) #, gradient_clip_val = 0.1)
     trainer.fit(model)
+
     return model
 
-def train_n_models(num_models, batch_size = 100, max_epochs = 30, use_one_seed = True, seed_number = 666):
+def train_n_models(num_models, max_epochs = 30, batch_size = 100, lr = 5e-5, loss_type='distance', relu_slope = 0., use_one_seed = True, seed_number = 666):
     models = []
     #if use_one_seed:
     #    #print('Seeding')
     #    pl.seed_everything(seed_number)
     for i in range(num_models):
-        model = train_model(batch_size=batch_size, max_epochs=max_epochs, deterministic=use_one_seed)
+        model = train_model(batch_size=batch_size, lr=lr, loss_type=loss_type, relu_slope=relu_slope, max_epochs=max_epochs, deterministic=use_one_seed)
         model.eval()
         models.append(model)
     return models
