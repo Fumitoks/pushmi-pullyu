@@ -8,6 +8,7 @@ from torchvision import datasets, transforms
 import os
 from collections import Counter
 import numpy as np
+from tqdm import tqdm_notebook as tqdm
 from .utils import numpify_list, numpify
 
 def get_cluster_acc(true_labels, predicted_labels):
@@ -116,13 +117,19 @@ class TestMnist(pl.LightningModule):
             logits = self.forward(x)
         return logits
 
-    def full_eval(self, eval_batch_size = 1000):
+    def full_eval(self, eval_batch_size = 1000, mode='val'):
         old_bs = self.batch_size
         self.batch_size = eval_batch_size
-        dataloader = self.val_dataloader()
+        if mode == 'val':
+            dataloader = self.val_dataloader()
+        elif mode == 'train':
+            dataloader = self.train_dataloader()
+        else:
+            print('Wrong mode selected')
+            return None
         logits_list = []
         labels_list = []
-        for batch_ndx, batch in enumerate(dataloader):
+        for batch in tqdm(dataloader):
             _, labels = batch
             batch_logits = self.get_predictions(batch)
             logits_list.append(batch_logits)
