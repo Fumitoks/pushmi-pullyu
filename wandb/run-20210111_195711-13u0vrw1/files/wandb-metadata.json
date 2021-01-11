@@ -1,0 +1,26 @@
+{
+    "os": "Linux-4.19.112+-x86_64-with-Ubuntu-18.04-bionic",
+    "python": "3.6.9",
+    "heartbeatAt": "2021-01-11T19:57:13.158610",
+    "startedAt": "2021-01-11T19:57:11.741765",
+    "docker": null,
+    "gpu": "Tesla V100-SXM2-16GB",
+    "gpu_count": 1,
+    "cpu_count": 2,
+    "cuda": "10.1.243",
+    "args": [
+        "-f",
+        "/root/.local/share/jupyter/runtime/kernel-9124689a-f802-4781-bc87-2cb60e631db1.json"
+    ],
+    "state": "running",
+    "program": "<python with no main file>",
+    "git": {
+        "remote": "git@github.com:Fumitoks/pushmi_pullyu",
+        "commit": "84de7a23a4ce122e73b9360eccf3610df0bfba9c"
+    },
+    "email": "edwardduriev@gmail.com",
+    "root": "/content/gdrive/My Drive/PUSHMI/pushmi_pullyu",
+    "host": "edca9a97348c",
+    "username": "root",
+    "executable": "/usr/bin/python3"
+}

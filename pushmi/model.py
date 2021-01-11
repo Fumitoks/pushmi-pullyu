@@ -111,7 +111,7 @@ class TestMnist(pl.LightningModule):
         x = torch.cat([x, transformed])
         logits = self.forward(x)
         loss_dict = self.full_loss(logits, 'train')
-        self.log_dict(loss_dict, prog_bar=True)
+        self.log_dict(loss_dict, prog_bar=True, logger=False)
         loss = loss_dict['train_loss']
         
         # wandb logs
@@ -119,7 +119,7 @@ class TestMnist(pl.LightningModule):
         self.logger.experiment.log({
             'train_loss' : loss,
             'epoch' : self.current_epoch
-            }, step = self.custom_step)
+            }, step = self.custom_step, commit=False)
 
         return loss
 
@@ -185,8 +185,8 @@ class TestMnist(pl.LightningModule):
         #print(Counter(true_labels.cpu().detach().numpy()))
         log_dict = {'val_loss' : avg_loss, 'val_acc' : acc}
         # wandb logger
-        self.logger.experiment.log(log_dict, step = self.custom_step)
-        self.log_dict(log_dict, prog_bar=True)
+        self.logger.experiment.log(log_dict, step = self.custom_step, commit=False)
+        self.log_dict(log_dict, prog_bar=True, logger=False)
 
     def prepare_data(self):
         # transforms for images
@@ -246,6 +246,7 @@ def train_model(max_epochs = 30, batch_size = 100, lr = 5e-5, loss_type = 'dista
         checkpoint_callback = checkpoint_callback, 
         logger = wandb_logger
         ) #, gradient_clip_val = 0.1)
+
     trainer.fit(model)
 
     return model

@@ -1,0 +1,24 @@
+2021-01-11 20:03:00,446 INFO    MainThread:2232 [wandb_setup.py:_flush():70] setting env: {}
+2021-01-11 20:03:00,447 INFO    MainThread:2232 [wandb_setup.py:_flush():70] multiprocessing start_methods=fork,spawn,forkserver
+2021-01-11 20:03:00,447 INFO    MainThread:2232 [wandb_setup.py:_flush():70] setting login settings: {}
+2021-01-11 20:03:00,448 INFO    MainThread:2232 [wandb_setup.py:_flush():70] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x7f1fd31e8588>
+2021-01-11 20:03:00,449 INFO    MainThread:2232 [wandb_init.py:_log_setup():303] Logging user logs to /content/gdrive/My Drive/PUSHMI/pushmi_pullyu/wandb/run-20210111_200300-3tx2jzjk/logs/debug.log
+2021-01-11 20:03:00,450 INFO    MainThread:2232 [wandb_init.py:_log_setup():304] Logging internal logs to /content/gdrive/My Drive/PUSHMI/pushmi_pullyu/wandb/run-20210111_200300-3tx2jzjk/logs/debug-internal.log
+2021-01-11 20:03:01,800 INFO    MainThread:2232 [wandb_run.py:_console_start():1237] atexit reg
+2021-01-11 20:03:01,806 INFO    MainThread:2232 [wandb_run.py:_redirect():1104] redirect: SettingsConsole.WRAP
+2021-01-11 20:03:01,808 INFO    MainThread:2232 [wandb_run.py:_redirect():1135] Wrapping output streams.
+2021-01-11 20:03:01,808 INFO    MainThread:2232 [wandb_run.py:_redirect():1151] Redirects installed.
+2021-01-11 20:03:01,921 INFO    MainThread:2232 [wandb_init.py:_pause_backend():224] pausing backend
+2021-01-11 20:04:43,665 INFO    MainThread:2232 [wandb_init.py:_resume_backend():229] resuming backend
+2021-01-11 20:04:43,719 INFO    MainThread:2232 [wandb_init.py:_pause_backend():224] pausing backend
+2021-01-11 20:06:57,168 INFO    MainThread:2232 [wandb_init.py:_resume_backend():229] resuming backend
+2021-01-11 20:06:57,214 INFO    MainThread:2232 [wandb_init.py:_pause_backend():224] pausing backend
+2021-01-11 20:07:30,859 INFO    MainThread:2232 [wandb_init.py:_resume_backend():229] resuming backend
+2021-01-11 20:07:35,856 INFO    MainThread:2232 [wandb_run.py:_config_callback():549] config_cb None None {'_wandb': {'cli_version': '0.10.12', 'python_version': '3.6.9', 'is_jupyter_run': True, 'is_kaggle_kernel': False, 'framework': 'torch'}}
+2021-01-11 20:07:46,743 INFO    MainThread:2232 [wandb_init.py:_pause_backend():224] pausing backend
+2021-01-11 20:11:01,340 INFO    MainThread:2232 [wandb_init.py:_resume_backend():229] resuming backend
+2021-01-11 20:11:01,476 INFO    MainThread:2232 [wandb_run.py:_config_callback():549] config_cb None None {'_wandb': {'cli_version': '0.10.12', 'python_version': '3.6.9', 'is_jupyter_run': True, 'is_kaggle_kernel': False, 'framework': 'torch'}}
+2021-01-11 20:14:35,243 INFO    MainThread:2232 [wandb_init.py:_pause_backend():224] pausing backend
+2021-01-11 20:14:37,252 INFO    MainThread:2232 [wandb_init.py:_resume_backend():229] resuming backend
+2021-01-11 20:15:03,205 INFO    MainThread:2232 [wandb_run.py:_atexit_cleanup():1207] got exitcode: 0
+2021-01-11 20:15:03,207 INFO    MainThread:2232 [wandb_run.py:_restore():1179] restore
