@@ -1,260 +1,0 @@
-
-  | Name       | Type       | Params
-------------------------------------------
-0 | activation | LeakyReLU  | 0     
-1 | layer1     | Sequential | 640   
-2 | layer2     | Sequential | 73.9 K
-3 | layer3     | Sequential | 295 K 
-4 | layer4     | Sequential | 1.2 M 
-5 | fc1        | Linear     | 262 K 
-6 | fc2        | Linear     | 5.1 K 
-------------------------------------------
-1.8 M     Trainable params
-0         Non-trainable params
-1.8 M     Total params
-/usr/local/lib/python3.6/dist-packages/torchvision/transforms/functional_tensor.py:876: UserWarning: Argument fill/fillcolor is not supported for Tensor input. Fill value is zero
-  warnings.warn("Argument fill/fillcolor is not supported for Tensor input. Fill value is zero")
-/usr/local/lib/python3.6/dist-packages/pytorch_lightning/utilities/distributed.py:49: UserWarning: Trying to log at a previous step. Use `commit=False` when logging metrics manually.
-  warnings.warn(*args, **kwargs)
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 49 < 15000; dropping {'train_loss': -0.0024111655075103045, 'train_loss1': 0.0010386494686827064, 'train_loss2': 0.005892772227525711, 'train_loss3': 0.0024429571349173784}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 99 < 30000; dropping {'train_loss': -0.01383224967867136, 'train_loss1': 0.0026783908251672983, 'train_loss2': 0.028266068547964096, 'train_loss3': 0.011755428276956081}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 149 < 45000; dropping {'train_loss': -0.05658528208732605, 'train_loss1': 0.040173839777708054, 'train_loss2': 0.13514982163906097, 'train_loss3': 0.03839069604873657}.
-/usr/local/lib/python3.6/dist-packages/pytorch_lightning/utilities/distributed.py:49: UserWarning: Detected KeyboardInterrupt, attempting graceful shutdown...
-  warnings.warn(*args, **kwargs)
-On branch main
-Your branch is up to date with 'origin/main'.
-
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-
-	[31mdeleted:    lightning_logs/version_0/checkpoints/epoch=4-step=919.ckpt[m
-	[31mdeleted:    lightning_logs/version_0/events.out.tfevents.1610382866.304251a9f787.60.0[m
-	[31mdeleted:    lightning_logs/version_0/hparams.yaml[m
-	[31mmodified:   pushmi/model.py[m
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-	[31mwandb/[m
-
-no changes added to commit (use "git add" and/or "git commit -a")
-remote: Enumerating objects: 42, done.[K
-remote: Counting objects:   2% (1/42)[Kremote: Counting objects:   4% (2/42)[Kremote: Counting objects:   7% (3/42)[Kremote: Counting objects:   9% (4/42)[Kremote: Counting objects:  11% (5/42)[Kremote: Counting objects:  14% (6/42)[Kremote: Counting objects:  16% (7/42)[Kremote: Counting objects:  19% (8/42)[Kremote: Counting objects:  21% (9/42)[Kremote: Counting objects:  23% (10/42)[Kremote: Counting objects:  26% (11/42)[Kremote: Counting objects:  28% (12/42)[Kremote: Counting objects:  30% (13/42)[Kremote: Counting objects:  33% (14/42)[Kremote: Counting objects:  35% (15/42)[Kremote: Counting objects:  38% (16/42)[Kremote: Counting objects:  40% (17/42)[Kremote: Counting objects:  42% (18/42)[Kremote: Counting objects:  45% (19/42)[Kremote: Counting objects:  47% (20/42)[Kremote: Counting objects:  50% (21/42)[Kremote: Counting objects:  52% (22/42)[Kremote: Counting objects:  54% (23/42)[Kremote: Counting objects:  57% (24/42)[Kremote: Counting objects:  59% (25/42)[Kremote: Counting objects:  61% (26/42)[Kremote: Counting objects:  64% (27/42)[Kremote: Counting objects:  66% (28/42)[Kremote: Counting objects:  69% (29/42)[Kremote: Counting objects:  71% (30/42)[Kremote: Counting objects:  73% (31/42)[Kremote: Counting objects:  76% (32/42)[Kremote: Counting objects:  78% (33/42)[Kremote: Counting objects:  80% (34/42)[Kremote: Counting objects:  83% (35/42)[Kremote: Counting objects:  85% (36/42)[Kremote: Counting objects:  88% (37/42)[Kremote: Counting objects:  90% (38/42)[Kremote: Counting objects:  92% (39/42)[Kremote: Counting objects:  95% (40/42)[Kremote: Counting objects:  97% (41/42)[Kremote: Counting objects: 100% (42/42)[Kremote: Counting objects: 100% (42/42), done.[K
-remote: Compressing objects:   4% (1/25)[Kremote: Compressing objects:   8% (2/25)[Kremote: Compressing objects:  12% (3/25)[Kremote: Compressing objects:  16% (4/25)[Kremote: Compressing objects:  20% (5/25)[Kremote: Compressing objects:  24% (6/25)[Kremote: Compressing objects:  28% (7/25)[Kremote: Compressing objects:  32% (8/25)[Kremote: Compressing objects:  36% (9/25)[Kremote: Compressing objects:  40% (10/25)[Kremote: Compressing objects:  44% (11/25)[Kremote: Compressing objects:  48% (12/25)[Kremote: Compressing objects:  52% (13/25)[Kremote: Compressing objects:  56% (14/25)[Kremote: Compressing objects:  60% (15/25)[Kremote: Compressing objects:  64% (16/25)[Kremote: Compressing objects:  68% (17/25)[Kremote: Compressing objects:  72% (18/25)[Kremote: Compressing objects:  76% (19/25)[Kremote: Compressing objects:  80% (20/25)[Kremote: Compressing objects:  84% (21/25)[Kremote: Compressing objects:  88% (22/25)[Kremote: Compressing objects:  92% (23/25)[Kremote: Compressing objects:  96% (24/25)[Kremote: Compressing objects: 100% (25/25)[Kremote: Compressing objects: 100% (25/25), done.[K
-Unpacking objects:   2% (1/39)   Unpacking objects:   5% (2/39)   Unpacking objects:   7% (3/39)   Unpacking objects:  10% (4/39)   Unpacking objects:  12% (5/39)   Unpacking objects:  15% (6/39)   Unpacking objects:  17% (7/39)   Unpacking objects:  20% (8/39)   Unpacking objects:  23% (9/39)   Unpacking objects:  25% (10/39)   Unpacking objects:  28% (11/39)   Unpacking objects:  30% (12/39)   Unpacking objects:  33% (13/39)   Unpacking objects:  35% (14/39)   Unpacking objects:  38% (15/39)   Unpacking objects:  41% (16/39)   Unpacking objects:  43% (17/39)   Unpacking objects:  46% (18/39)   Unpacking objects:  48% (19/39)   Unpacking objects:  51% (20/39)   Unpacking objects:  53% (21/39)   Unpacking objects:  56% (22/39)   Unpacking objects:  58% (23/39)   Unpacking objects:  61% (24/39)   Unpacking objects:  64% (25/39)   Unpacking objects:  66% (26/39)   Unpacking objects:  69% (27/39)   Unpacking objects:  71% (28/39)   Unpacking objects:  74% (29/39)   Unpacking objects:  76% (30/39)   Unpacking objects:  79% (31/39)   Unpacking objects:  82% (32/39)   Unpacking objects:  84% (33/39)   Unpacking objects:  87% (34/39)   Unpacking objects:  89% (35/39)   Unpacking objects:  92% (36/39)   Unpacking objects:  94% (37/39)   Unpacking objects:  97% (38/39)   remote: Total 39 (delta 12), reused 39 (delta 12), pack-reused 0[K
-Unpacking objects: 100% (39/39)   Unpacking objects: 100% (39/39), done.
-From github.com:Fumitoks/pushmi_pullyu
-   84de7a2..81a4c64  main       -> origin/main
-On branch main
-Your branch is behind 'origin/main' by 2 commits, and can be fast-forwarded.
-  (use "git pull" to update your local branch)
-
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-
-	[31mdeleted:    lightning_logs/version_0/checkpoints/epoch=4-step=919.ckpt[m
-	[31mdeleted:    lightning_logs/version_0/events.out.tfevents.1610382866.304251a9f787.60.0[m
-	[31mdeleted:    lightning_logs/version_0/hparams.yaml[m
-	[31mmodified:   pushmi/model.py[m
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-	[31mwandb/[m
-
-no changes added to commit (use "git add" and/or "git commit -a")
-Updating 84de7a2..81a4c64
-error: Your local changes to the following files would be overwritten by merge:
-	pushmi/model.py
-Please commit your changes or stash them before you merge.
-Aborting
-Unstaged changes after reset:
-D	lightning_logs/version_0/checkpoints/epoch=4-step=919.ckpt
-D	lightning_logs/version_0/events.out.tfevents.1610382866.304251a9f787.60.0
-D	lightning_logs/version_0/hparams.yaml
-M	pushmi/model.py
-Updating 84de7a2..81a4c64
-error: Your local changes to the following files would be overwritten by merge:
-	pushmi/model.py
-Please commit your changes or stash them before you merge.
-Aborting
-On branch main
-Your branch is behind 'origin/main' by 2 commits, and can be fast-forwarded.
-  (use "git pull" to update your local branch)
-
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-
-	[31mdeleted:    lightning_logs/version_0/checkpoints/epoch=4-step=919.ckpt[m
-	[31mdeleted:    lightning_logs/version_0/events.out.tfevents.1610382866.304251a9f787.60.0[m
-	[31mdeleted:    lightning_logs/version_0/hparams.yaml[m
-	[31mmodified:   pushmi/model.py[m
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-	[31mwandb/[m
-
-no changes added to commit (use "git add" and/or "git commit -a")
-Unstaged changes after reset:
-D	lightning_logs/version_0/checkpoints/epoch=4-step=919.ckpt
-D	lightning_logs/version_0/events.out.tfevents.1610382866.304251a9f787.60.0
-D	lightning_logs/version_0/hparams.yaml
-M	pushmi/model.py
-On branch main
-Your branch is behind 'origin/main' by 2 commits, and can be fast-forwarded.
-  (use "git pull" to update your local branch)
-
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-
-	[31mdeleted:    lightning_logs/version_0/checkpoints/epoch=4-step=919.ckpt[m
-	[31mdeleted:    lightning_logs/version_0/events.out.tfevents.1610382866.304251a9f787.60.0[m
-	[31mdeleted:    lightning_logs/version_0/hparams.yaml[m
-	[31mdeleted:    lightning_logs/version_1/checkpoints/epoch=4-step=919.ckpt[m
-	[31mdeleted:    lightning_logs/version_1/events.out.tfevents.1610383943.304251a9f787.60.1[m
-	[31mdeleted:    lightning_logs/version_1/hparams.yaml[m
-	[31mmodified:   pushmi/model.py[m
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-	[31mwandb/[m
-
-no changes added to commit (use "git add" and/or "git commit -a")
-Updating 84de7a2..81a4c64
-error: Your local changes to the following files would be overwritten by merge:
-	pushmi/model.py
-Please commit your changes or stash them before you merge.
-Aborting
-Checking out files:  42% (3/7)   Checking out files:  57% (4/7)   Checking out files:  71% (5/7)   Checking out files:  85% (6/7)   Checking out files: 100% (7/7)   Checking out files: 100% (7/7), done.
-HEAD is now at 84de7a2 deleted wandb folder
-Updating 84de7a2..81a4c64
-Fast-forward
- pushmi/model.py | 9 [32m+++++[m[31m----[m
- 1 file changed, 5 insertions(+), 4 deletions(-)
-On branch main
-Your branch is up to date with 'origin/main'.
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-	[31mwandb/[m
-
-nothing added to commit but untracked files present (use "git add" to track)
-{'channels': [1, 32, 64], 'fc_dims': [3136, 1000, 10], 'kernel_size': [5]}
-GPU available: True, used: True
-TPU available: None, using: 0 TPU cores
-LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
-
-  | Name | Type       | Params
-------------------------------------
-0 | net  | SimpleConv | 3.2 M 
-------------------------------------
-3.2 M     Trainable params
-0         Non-trainable params
-3.2 M     Total params
-/usr/local/lib/python3.6/dist-packages/torchvision/transforms/functional_tensor.py:876: UserWarning: Argument fill/fillcolor is not supported for Tensor input. Fill value is zero
-  warnings.warn("Argument fill/fillcolor is not supported for Tensor input. Fill value is zero")
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 0 < 55000; dropping {'val_loss': tensor(0.9568, device='cuda:0'), 'val_acc': 0.15666666666666668}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 300 < 55000; dropping {'train_loss': tensor(0.9542, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 600 < 55000; dropping {'train_loss': tensor(0.9580, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 900 < 55000; dropping {'train_loss': tensor(0.9577, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 1200 < 55000; dropping {'train_loss': tensor(0.9604, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 1500 < 55000; dropping {'train_loss': tensor(0.9597, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 1800 < 55000; dropping {'train_loss': tensor(0.9570, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 2100 < 55000; dropping {'train_loss': tensor(0.9523, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 2400 < 55000; dropping {'train_loss': tensor(0.9488, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 2700 < 55000; dropping {'train_loss': tensor(0.9508, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 3000 < 55000; dropping {'train_loss': tensor(0.9467, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 3300 < 55000; dropping {'train_loss': tensor(0.9473, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 3600 < 55000; dropping {'train_loss': tensor(0.9462, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 3900 < 55000; dropping {'train_loss': tensor(0.9487, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 4200 < 55000; dropping {'train_loss': tensor(0.9394, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 4500 < 55000; dropping {'train_loss': tensor(0.9305, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 4800 < 55000; dropping {'train_loss': tensor(0.9430, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 5100 < 55000; dropping {'train_loss': tensor(0.9334, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 5400 < 55000; dropping {'train_loss': tensor(0.9335, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 5700 < 55000; dropping {'train_loss': tensor(0.9386, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 6000 < 55000; dropping {'train_loss': tensor(0.9465, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 6300 < 55000; dropping {'train_loss': tensor(0.9392, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 6600 < 55000; dropping {'train_loss': tensor(0.9429, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 6900 < 55000; dropping {'train_loss': tensor(0.9314, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 7200 < 55000; dropping {'train_loss': tensor(0.9326, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 7500 < 55000; dropping {'train_loss': tensor(0.9249, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 7800 < 55000; dropping {'train_loss': tensor(0.9279, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 8100 < 55000; dropping {'train_loss': tensor(0.9176, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 8400 < 55000; dropping {'train_loss': tensor(0.9178, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 8700 < 55000; dropping {'train_loss': tensor(0.9246, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 9000 < 55000; dropping {'train_loss': tensor(0.9308, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 9300 < 55000; dropping {'train_loss': tensor(0.9197, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 9600 < 55000; dropping {'train_loss': tensor(0.9265, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 9900 < 55000; dropping {'train_loss': tensor(0.9205, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 10200 < 55000; dropping {'train_loss': tensor(0.9096, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 10500 < 55000; dropping {'train_loss': tensor(0.9109, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 10800 < 55000; dropping {'train_loss': tensor(0.9207, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 11100 < 55000; dropping {'train_loss': tensor(0.8969, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 11400 < 55000; dropping {'train_loss': tensor(0.9074, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 11700 < 55000; dropping {'train_loss': tensor(0.9143, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 12000 < 55000; dropping {'train_loss': tensor(0.9102, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 12300 < 55000; dropping {'train_loss': tensor(0.9276, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 12600 < 55000; dropping {'train_loss': tensor(0.8791, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 12900 < 55000; dropping {'train_loss': tensor(0.8927, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 13200 < 55000; dropping {'train_loss': tensor(0.8817, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 13500 < 55000; dropping {'train_loss': tensor(0.8904, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 13800 < 55000; dropping {'train_loss': tensor(0.8835, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 14100 < 55000; dropping {'train_loss': tensor(0.8890, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 14400 < 55000; dropping {'train_loss': tensor(0.8889, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 14700 < 55000; dropping {'train_loss': tensor(0.8727, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 15000 < 55000; dropping {'train_loss': tensor(0.8634, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 15300 < 55000; dropping {'train_loss': tensor(0.8403, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 15600 < 55000; dropping {'train_loss': tensor(0.8441, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 15900 < 55000; dropping {'train_loss': tensor(0.8575, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 16200 < 55000; dropping {'train_loss': tensor(0.8626, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 16500 < 55000; dropping {'train_loss': tensor(0.8830, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 16800 < 55000; dropping {'train_loss': tensor(0.8580, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 17100 < 55000; dropping {'train_loss': tensor(0.8428, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 17400 < 55000; dropping {'train_loss': tensor(0.8533, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 17700 < 55000; dropping {'train_loss': tensor(0.8455, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 18000 < 55000; dropping {'train_loss': tensor(0.8815, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 18300 < 55000; dropping {'train_loss': tensor(0.8382, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 18600 < 55000; dropping {'train_loss': tensor(0.9415, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 18900 < 55000; dropping {'train_loss': tensor(0.8622, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 19200 < 55000; dropping {'train_loss': tensor(0.8559, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 19500 < 55000; dropping {'train_loss': tensor(0.8250, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 19800 < 55000; dropping {'train_loss': tensor(0.8109, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 20100 < 55000; dropping {'train_loss': tensor(0.8503, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 20400 < 55000; dropping {'train_loss': tensor(0.8136, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 20700 < 55000; dropping {'train_loss': tensor(0.8079, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 21000 < 55000; dropping {'train_loss': tensor(0.8360, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 21300 < 55000; dropping {'train_loss': tensor(0.8456, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 21600 < 55000; dropping {'train_loss': tensor(0.8268, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 21900 < 55000; dropping {'train_loss': tensor(0.8495, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 22200 < 55000; dropping {'train_loss': tensor(0.8995, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 22500 < 55000; dropping {'train_loss': tensor(0.8212, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 22800 < 55000; dropping {'train_loss': tensor(0.8433, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 23100 < 55000; dropping {'train_loss': tensor(0.8156, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 23400 < 55000; dropping {'train_loss': tensor(0.8261, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 23700 < 55000; dropping {'train_loss': tensor(0.7850, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 24000 < 55000; dropping {'train_loss': tensor(0.8700, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 24300 < 55000; dropping {'train_loss': tensor(0.8613, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 24600 < 55000; dropping {'train_loss': tensor(0.9245, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 24900 < 55000; dropping {'train_loss': tensor(0.8756, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 25200 < 55000; dropping {'train_loss': tensor(0.7953, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 25500 < 55000; dropping {'train_loss': tensor(0.8115, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 25800 < 55000; dropping {'train_loss': tensor(0.7007, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 26100 < 55000; dropping {'train_loss': tensor(0.8662, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 26400 < 55000; dropping {'train_loss': tensor(0.8343, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 26700 < 55000; dropping {'train_loss': tensor(0.8616, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 27000 < 55000; dropping {'train_loss': tensor(0.8288, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 27300 < 55000; dropping {'train_loss': tensor(0.7602, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 27600 < 55000; dropping {'train_loss': tensor(0.7330, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 27900 < 55000; dropping {'train_loss': tensor(0.7641, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 28200 < 55000; dropping {'train_loss': tensor(0.7731, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-[34m[1mwandb[0m: [33mWARNING[0m Step must only increase in log calls.  Step 28500 < 55000; dropping {'train_loss': tensor(0.7751, device='cuda:0', grad_fn=<AddBackward0>), 'epoch': 0}.
-/usr/local/lib/python3.6/dist-packages/pytorch_lightning/utilities/distributed.py:49: UserWarning: Detected KeyboardInterrupt, attempting graceful shutdown...
-  warnings.warn(*args, **kwargs)
