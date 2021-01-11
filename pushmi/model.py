@@ -233,9 +233,11 @@ def train_model(max_epochs = 30, batch_size = 100, lr = 5e-5, loss_type = 'dista
         mode = 'min'
     )
     # weight&biases logger used by trainer
+    wandb_dir = '/content/gdrive/My Drive/PUSHMI/wandb/'
     wandb_logger = WandbLogger(
         name = model_name,
-        project = 'pushmi'
+        project = 'pushmi',
+        dir = wandb_dir
     )
     trainer = pl.Trainer(
         deterministic = deterministic,
@@ -246,9 +248,7 @@ def train_model(max_epochs = 30, batch_size = 100, lr = 5e-5, loss_type = 'dista
         checkpoint_callback = checkpoint_callback, 
         logger = wandb_logger
         ) #, gradient_clip_val = 0.1)
-
     trainer.fit(model)
-
     return model
 
 def train_n_models(num_models, max_epochs = 30, batch_size = 100, lr = 5e-5, loss_type='distance', relu_slope = 0., use_one_seed = True, seed_number = 666):
