@@ -1,0 +1,13 @@
+2021-01-11 21:12:12,822 INFO    MainThread:1434 [wandb_setup.py:_flush():70] setting env: {}
+2021-01-11 21:12:12,823 INFO    MainThread:1434 [wandb_setup.py:_flush():70] multiprocessing start_methods=fork,spawn,forkserver
+2021-01-11 21:12:12,823 INFO    MainThread:1434 [wandb_setup.py:_flush():70] setting login settings: {}
+2021-01-11 21:12:12,823 INFO    MainThread:1434 [wandb_setup.py:_flush():70] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x7f7c50c4ff28>
+2021-01-11 21:12:12,824 INFO    MainThread:1434 [wandb_init.py:_log_setup():303] Logging user logs to /content/gdrive/My Drive/PUSHMI/pushmi_pullyu/wandb/run-20210111_211212-3amuhsha/logs/debug.log
+2021-01-11 21:12:12,825 INFO    MainThread:1434 [wandb_init.py:_log_setup():304] Logging internal logs to /content/gdrive/My Drive/PUSHMI/pushmi_pullyu/wandb/run-20210111_211212-3amuhsha/logs/debug-internal.log
+2021-01-11 21:12:14,396 INFO    MainThread:1434 [wandb_run.py:_console_start():1237] atexit reg
+2021-01-11 21:12:14,402 INFO    MainThread:1434 [wandb_run.py:_redirect():1104] redirect: SettingsConsole.WRAP
+2021-01-11 21:12:14,404 INFO    MainThread:1434 [wandb_run.py:_redirect():1135] Wrapping output streams.
+2021-01-11 21:12:14,404 INFO    MainThread:1434 [wandb_run.py:_redirect():1151] Redirects installed.
+2021-01-11 21:12:14,407 INFO    MainThread:1434 [wandb_run.py:_config_callback():549] config_cb None None {'_wandb': {'cli_version': '0.10.12', 'python_version': '3.6.9', 'is_jupyter_run': True, 'is_kaggle_kernel': False, 'framework': 'torch'}}
+2021-01-11 21:13:27,148 INFO    MainThread:1434 [wandb_init.py:_pause_backend():224] pausing backend
+2021-01-11 21:15:10,572 INFO    MainThread:1434 [wandb_init.py:_resume_backend():229] resuming backend

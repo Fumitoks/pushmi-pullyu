@@ -19,24 +19,108 @@ def get_cluster_acc(true_labels, predicted_labels):
         counters.append(Counter(true_labels[predicted_labels==i]))
     return sum([max(counter.values()) for counter in counters]) / true_labels.shape[0]
 
+class VGG(nn.Module):
+    def __init__(self, channels, fc_dims, kernel_size=[], activation_type='relu'):
+        super(VGG, self).__init__()
+        self.vgg_blocks = nn.ModuleList()
+        self.fcs = nn.ModuleList()
+        for i in range(len(channels) - 1):
+            if len(kernel_size) == 0:
+                k_size = 3
+            elif len(kernel_size) == 1:
+                k_size = kernel_size[0]
+            else:
+                k_size = kernel_size[i]
+            self.vgg_blocks.append(VGGBlock(in_channels = channels[i], out_channels = channels[i+1],
+                                            kernel_size=k_size, activation_type = activation_type))
+        for i in range(len(fc_dims) - 1):
+            self.fcs.append(nn.Linear(fc_dims[i], fc_dims[i+1]))
+
+    def forward(self, x):
+        for block in self.vgg_blocks:
+            x = block.forward(x)
+        x = x.reshape(x.size(0), -1)
+        for i in range(len(self.fcs)):
+            #print(x.shape)
+            x = self.fcs[i](x)
+            if i!=len(self.fcs)-1:
+                #print('here')
+                x = nn.ReLU()(x)
+        return x
+
+class VGGBlock(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size=3, activation_type='relu'):
+        super(VGGBlock, self).__init__()
+        if activation_type == 'relu':
+            self.activation = nn.ReLU()
+        self.sequence = nn.Sequential(
+                nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, stride=1, padding=kernel_size//2),
+                #nn.BatchNorm2d(out_channels),
+                self.activation,
+                nn.Conv2d(out_channels, out_channels, kernel_size=kernel_size, stride=1, padding=kernel_size//2),
+                #nn.BatchNorm2d(out_channels),
+                self.activation,
+                nn.MaxPool2d(kernel_size=2, stride=2))
+        
+    def forward(self, x):
+        x = self.sequence(x)
+        return x
+
+class SimpleConv(nn.Module):
+    def __init__(self, channels, fc_dims, kernel_size=[], activation_type='relu'):
+        super(SimpleConv, self).__init__()
+        self.vgg_blocks = nn.ModuleList()
+        self.fcs = nn.ModuleList()
+        for i in range(len(channels) - 1):
+            if len(kernel_size) == 0:
+                k_size = 3
+            elif len(kernel_size) == 1:
+                k_size = kernel_size[0]
+            else:
+                k_size = kernel_size[i]
+            self.vgg_blocks.append(ConvBlock(in_channels = channels[i], out_channels = channels[i+1],
+                                            kernel_size=k_size, activation_type = activation_type))
+        for i in range(len(fc_dims) - 1):
+            self.fcs.append(nn.Linear(fc_dims[i], fc_dims[i+1]))
+
+    def forward(self, x):
+        for block in self.vgg_blocks:
+            x = block.forward(x)
+        x = x.reshape(x.size(0), -1)
+        for i in range(len(self.fcs)):
+            #print(x.shape)
+            x = self.fcs[i](x)
+            if i!=len(self.fcs)-1:
+                #print('here')
+                x = nn.ReLU()(x)
+        return x
+
+class ConvBlock(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size=3, activation_type='relu'):
+        super(ConvBlock, self).__init__()
+        if activation_type == 'relu':
+            self.activation = nn.ReLU()
+        self.sequence = nn.Sequential(
+                nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, stride=1, padding=kernel_size//2),
+                #nn.BatchNorm2d(out_channels),
+                self.activation,
+                nn.MaxPool2d(kernel_size=2, stride=2))
+        
+    def forward(self, x):
+        x = self.sequence(x)
+        return x
+
 class TestMnist(pl.LightningModule):
 
-    def __init__(self, batch_size, lr = 5e-5, loss_type='distance', relu_slope = 0., constant_split_val=False):
+    def __init__(self, batch_size, mode_dict, lr = 1e-4, loss_type='distance', constant_split_val=False):
         super(TestMnist, self).__init__()
         # mnist images are (1, 28, 28) (channels, width, height) 
         self.batch_size = batch_size
         self.lr = lr
         self.loss_type = loss_type
-        self.relu_slope = relu_slope
-        self.name = '_'.join([
-            loss_type,
-            str(batch_size),
-            str(f'{lr:.0e}'),
-            str(relu_slope)
-            ])
+        self.mode_dict = mode_dict
 
         self.num_classes = 10
-        self.activation = nn.LeakyReLU(negative_slope=relu_slope)
         self.constant_split_val = constant_split_val
         self.val_results = list()
         self.train_transform = transforms.Compose([
@@ -47,38 +131,22 @@ class TestMnist(pl.LightningModule):
                     #transforms.Normalize((0.1307,), (0.3081,))
                     ])
         self.custom_step = 0
-        self.init_layers()
+        self.name = '_'.join([
+            loss_type,
+            str(batch_size),
+            str(f'{lr:.0e}')#,
+            #str(relu_slope)
+            ])
+
+        self.net = self.init_layers()
 
     def init_layers(self):
-        self.layer1 = nn.Sequential(
-            nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1),
-            self.activation,
-            nn.MaxPool2d(kernel_size=2, stride=2))
-        self.layer2 = nn.Sequential(
-            nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
-            self.activation,
-            nn.MaxPool2d(kernel_size=2, stride=2))            
-        self.layer3 = nn.Sequential(
-            nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1),
-            self.activation,
-            nn.MaxPool2d(kernel_size=2, stride=2))            
-        self.layer4 = nn.Sequential(
-            nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1),
-            self.activation,
-            nn.MaxPool2d(kernel_size=2, stride=2))
-        self.fc_intermediate = 512
-        self.fc1 = nn.Linear(1 * 1 * 512, self.fc_intermediate)
-        self.fc2 = nn.Linear(self.fc_intermediate, 10)
+        if self.mode_dict['mode'] == 'SimpleConv':
+            #print(self.mode_dict['params'])
+            return SimpleConv(**self.mode_dict['params'])
 
     def forward(self, x):
-        out = self.layer1(x)
-        out = self.layer2(out)
-        out = self.layer3(out)
-        out = self.layer4(out)
-        out = out.reshape(out.size(0), -1)       
-        out = self.fc1(out)
-        out = self.activation(out)
-        out = self.fc2(out)
+        out = self.net.forward(x)
         out = torch.softmax(out, dim=1)
         return out
 
@@ -89,7 +157,10 @@ class TestMnist(pl.LightningModule):
 
         if self.loss_type == 'distance':
             loss1 = torch.linalg.norm(mean_logits-torch.ones_like(mean_logits)/self.num_classes)
-            loss2 = torch.mean(torch.linalg.norm(logits-torch.ones_like(logits)/self.num_classes, dim=1))
+            simplex_vertex = torch.zeros_like(mean_logits)
+            simplex_vertex[0] = simplex_vertex[0] + 1
+            max_dist = torch.linalg.norm(simplex_vertex-torch.ones_like(mean_logits)/self.num_classes)
+            loss2 = max_dist - torch.mean(torch.linalg.norm(logits-torch.ones_like(logits)/self.num_classes, dim=1))
         
         if self.loss_type == 'entropy':
             loss1 = self.entropy_loss(mean_logits)
@@ -98,7 +169,7 @@ class TestMnist(pl.LightningModule):
         loss3 = torch.mean(torch.linalg.norm(logits - transformed_logits, dim=1))
 
         #TODO: experiment with coefficients 
-        loss = 1.*loss1 - 1.*loss2 + 1.*loss3
+        loss = 1.*loss1 + 1.*loss2 + 1.*loss3
         return {prefix + '_loss' : loss, prefix + '_loss1' : loss1, prefix + '_loss2' : loss2, prefix + '_loss3' : loss3}
 
     def entropy_loss(self, logits):
@@ -155,11 +226,6 @@ class TestMnist(pl.LightningModule):
         logits, true_labels, predicted_labels = numpify_list([logits, true_labels, predicted_labels])
         self.batch_size = old_bs
         return {'logits' : logits, 'true_labels' : true_labels, 'predicted_labels' : predicted_labels}
-    
-    def print_n(self, n, x):
-        if self.counter < n:
-            print('out = ', x)
-            self.counter += 1
 
     def validation_step(self, batch, batch_idx):
         x, y = batch
@@ -218,8 +284,8 @@ class TestMnist(pl.LightningModule):
         return optimizer
 
 # train
-def train_model(max_epochs = 30, batch_size = 100, lr = 5e-5, loss_type = 'distance', relu_slope = 0., deterministic=False):
-    model = TestMnist(batch_size, lr=lr, loss_type=loss_type, relu_slope=relu_slope, constant_split_val = deterministic)
+def train_model(mode_dict, max_epochs = 30, batch_size = 100, lr = 1e-4, loss_type = 'distance', constant_split_val = True, deterministic=False):
+    model = TestMnist(batch_size, mode_dict=mode_dict, lr=lr, loss_type=loss_type, constant_split_val = constant_split_val)
 
     model_save_dir = '/content/gdrive/My Drive/PUSHMI/saved_models/'
     model_name = model.name
@@ -251,13 +317,17 @@ def train_model(max_epochs = 30, batch_size = 100, lr = 5e-5, loss_type = 'dista
 
     return model
 
-def train_n_models(num_models, max_epochs = 30, batch_size = 100, lr = 5e-5, loss_type='distance', relu_slope = 0., use_one_seed = True, seed_number = 666):
+def train_n_models(num_models, mode_dict, max_epochs = 30, batch_size = 100, lr = 1e-4, loss_type='distance', deterministic=False, constant_split_val = False, seed_number = 666):
     models = []
     #if use_one_seed:
     #    #print('Seeding')
     #    pl.seed_everything(seed_number)
+    if num_models > 1:
+        constant_split_val = True
+    else:
+        constant_split_val = False
     for i in range(num_models):
-        model = train_model(batch_size=batch_size, lr=lr, loss_type=loss_type, relu_slope=relu_slope, max_epochs=max_epochs, deterministic=use_one_seed)
+        model = train_model(mode_dict=mode_dict, batch_size=batch_size, lr=lr, loss_type=loss_type, max_epochs=max_epochs, deterministic=deterministic)
         model.eval()
         models.append(model)
     return models
