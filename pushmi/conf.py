@@ -41,6 +41,7 @@ def default_config():
     config.arch.channels = [1, 32, 64]
     config.arch.fc_dims = [7*7*64, 1000, 10]
     config.arch.kernel_size = [5]
+    config.arch.name = 'basic'
 
     config.model.batch_size = 100   
     config.model.lr = 1e-5
@@ -48,9 +49,6 @@ def default_config():
     config.model.signature = ''
 
     config.train.max_epochs = 100
-    config.train.val_check_interval = 0.2
-    config.train.limit_train_batches = 1.
-    config.train.limit_val_batches = 1.
     config.train.accumulate_grad_batches = 1
 
     return config

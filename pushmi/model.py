@@ -1,23 +1,15 @@
 import torch
 from torch import nn
-import pytorch_lightning as pl
 from torch.utils.data import DataLoader, random_split
 from torch.nn import functional as F
 from torchvision.datasets import MNIST
 from torchvision import datasets, transforms
-from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.loggers import WandbLogger
+import pytorch_lightning as pl
 import os
 from collections import Counter
 import numpy as np
 from tqdm import tqdm_notebook as tqdm
 from .utils import numpify_list, numpify
-
-def get_cluster_acc(true_labels, predicted_labels):
-    counters = []
-    for i in np.unique(predicted_labels).tolist():
-        counters.append(Counter(true_labels[predicted_labels==i]))
-    return sum([max(counter.values()) for counter in counters]) / true_labels.shape[0]
 
 class VGG(nn.Module):
     def __init__(self, channels, fc_dims, kernel_size=[], activation_type='relu'):
@@ -106,18 +98,28 @@ class ConvBlock(nn.Module):
         x = self.sequence(x)
         return x
 
-class TestMnist(pl.LightningModule):
+def get_model_name(config):
+    return '_'.join([
+            config.model.loss_type,
+            str(config.model.batch_size),
+            str(f'{config.model.lr:.0e}'),
+            config.arch.name,
+            config.model.signature
+            ])
 
-    def __init__(self, batch_size, mode_dict, lr = 1e-4, loss_type='distance', constant_split_val=False):
+class TestMnist(pl.LightningModule):
+    def __init__(self, config):
         super(TestMnist, self).__init__()
         # mnist images are (1, 28, 28) (channels, width, height) 
         self.batch_size = config.model.batch_size
         self.lr = config.model.lr
         self.loss_type = config.model.loss_type
+        self.signature = config.model.signature
         self.arch = config.arch.__dict__
+        self.constant_split_val = False
 
         self.num_classes = 10
-        self.constant_split_val = constant_split_val
+        self.custom_step = 0
         self.val_results = list()
         self.train_transform = transforms.Compose([
                     transforms.RandomAffine(degrees=20, translate=(0.1,0.1), scale=(0.9, 1.1))
@@ -125,14 +127,8 @@ class TestMnist(pl.LightningModule):
                     #transforms.ColorJitter(brightness=0.2, contrast=0.2),
                     #transforms.ToTensor(),
                     #transforms.Normalize((0.1307,), (0.3081,))
-                    ])
-        self.custom_step = 0
-        self.name = '_'.join([
-            loss_type,
-            str(batch_size),
-            str(f'{lr:.0e}')#,
-            #str(relu_slope)
-            ])
+                    ])        
+        self.name = get_model_name(config)
 
         self.net = self.init_layers()
 
@@ -249,7 +245,7 @@ class TestMnist(pl.LightningModule):
         
     def prepare_data(self):
         # transforms for images
-        transform=transforms.Compose([transforms.ToTensor(), 
+        transform = transforms.Compose([transforms.ToTensor(), 
                                     transforms.Normalize((0.1307,), (0.3081,))])       
         # prepare transforms standard to MNIST
         mnist_train = MNIST(os.getcwd(), train=True, download=True, transform=transform)
@@ -274,51 +270,8 @@ class TestMnist(pl.LightningModule):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
         return optimizer
 
-# train
-def train_model(max_epoch, mode_dict, batch_size = 100, lr = 1e-4, loss_type = 'distance', constant_split_val = True, deterministic=False):
-    model = TestMnist(batch_size, mode_dict=mode_dict, lr=lr, loss_type=loss_type, constant_split_val = constant_split_val)
-
-    model_save_dir = '/content/gdrive/My Drive/PUSHMI/saved_models/'
-    model_name = model.name
-    # saving checkpoint
-    checkpoint_callback = ModelCheckpoint(
-        dirpath = model_save_dir + model_name,
-        filename = 'model',
-        save_top_k = 1,
-        verbose = True,
-        monitor = 'val_loss',
-        mode = 'min'
-    )
-    # weight&biases logger used by trainer
-    wandb_dir = '/content/gdrive/My Drive/PUSHMI/wandb/'
-    wandb_logger = WandbLogger(
-        name = model_name,
-        project = 'pushmi',
-        dir = wandb_dir
-    )
-    trainer = pl.Trainer(
-        deterministic = deterministic,
-        gpus = 1,
-        max_epochs = max_epochs, 
-        progress_bar_refresh_rate = 20, 
-        accumulate_grad_batches = 1,
-        checkpoint_callback = checkpoint_callback, 
-        logger = wandb_logger
-        ) #, gradient_clip_val = 0.1)
-    trainer.fit(model)
-    return model
-
-def train_n_models(num_models, max_epochs, mode_dict, batch_size = 100, lr = 1e-4, loss_type='distance', deterministic=False, constant_split_val = False, seed_number = 666):
-    models = []
-    #if use_one_seed:
-    #    #print('Seeding')
-    #    pl.seed_everything(seed_number)
-    if num_models > 1:
-        constant_split_val = True
-    else:
-        constant_split_val = False
-    for i in range(num_models):
-        model = train_model(batch_size=batch_size, mode_dict=mode_dict, lr=lr, loss_type=loss_type, max_epochs=max_epochs, deterministic=deterministic)
-        model.eval()
-        models.append(model)
-    return models
+def get_cluster_acc(true_labels, predicted_labels):
+    counters = []
+    for i in np.unique(predicted_labels).tolist():
+        counters.append(Counter(true_labels[predicted_labels==i]))
+    return sum([max(counter.values()) for counter in counters]) / true_labels.shape[0]
