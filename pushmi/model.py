@@ -41,10 +41,8 @@ class VGG(nn.Module):
             x = block.forward(x)
         x = x.reshape(x.size(0), -1)
         for i in range(len(self.fcs)):
-            #print(x.shape)
             x = self.fcs[i](x)
             if i!=len(self.fcs)-1:
-                #print('here')
                 x = nn.ReLU()(x)
         return x
 
@@ -67,7 +65,7 @@ class VGGBlock(nn.Module):
         return x
 
 class SimpleConv(nn.Module):
-    def __init__(self, channels, fc_dims, kernel_size=[], activation_type='relu'):
+    def __init__(self, channels, fc_dims, kernel_size=[], activation_type='relu', **kwargs):
         super(SimpleConv, self).__init__()
         self.vgg_blocks = nn.ModuleList()
         self.fcs = nn.ModuleList()
@@ -88,10 +86,8 @@ class SimpleConv(nn.Module):
             x = block.forward(x)
         x = x.reshape(x.size(0), -1)
         for i in range(len(self.fcs)):
-            #print(x.shape)
             x = self.fcs[i](x)
             if i!=len(self.fcs)-1:
-                #print('here')
                 x = nn.ReLU()(x)
         return x
 
@@ -115,18 +111,18 @@ class TestMnist(pl.LightningModule):
     def __init__(self, batch_size, mode_dict, lr = 1e-4, loss_type='distance', constant_split_val=False):
         super(TestMnist, self).__init__()
         # mnist images are (1, 28, 28) (channels, width, height) 
-        self.batch_size = batch_size
-        self.lr = lr
-        self.loss_type = loss_type
-        self.mode_dict = mode_dict
+        self.batch_size = config.model.batch_size
+        self.lr = config.model.lr
+        self.loss_type = config.model.loss_type
+        self.arch = config.arch.__dict__
 
         self.num_classes = 10
         self.constant_split_val = constant_split_val
         self.val_results = list()
         self.train_transform = transforms.Compose([
-                    #transforms.ToPILImage()#,
                     transforms.RandomAffine(degrees=20, translate=(0.1,0.1), scale=(0.9, 1.1))
-                    #transforms.ColorJitter(brightness=0.2, contrast=0.2)#,
+                    #transforms.ToPILImage(),                   
+                    #transforms.ColorJitter(brightness=0.2, contrast=0.2),
                     #transforms.ToTensor(),
                     #transforms.Normalize((0.1307,), (0.3081,))
                     ])
@@ -141,9 +137,8 @@ class TestMnist(pl.LightningModule):
         self.net = self.init_layers()
 
     def init_layers(self):
-        if self.mode_dict['mode'] == 'SimpleConv':
-            #print(self.mode_dict['params'])
-            return SimpleConv(**self.mode_dict['params'])
+        if self.arch['mode'] == 'SimpleConv':
+            return SimpleConv(**self.arch)
 
     def forward(self, x):
         out = self.net.forward(x)
@@ -237,7 +232,6 @@ class TestMnist(pl.LightningModule):
         _, predicted_labels = torch.max(logits[:logits.shape[0]//2], dim=1)
 
         d = {'val_loss' : loss_dict['val_loss'], 'true_labels' : y, 'predicted_labels' : predicted_labels, 'logits' : logits[:logits.shape[0]//2]}
-        #self.log('val_loss', loss_dict['val_loss'], prog_bar=True)
         return d
 
     def validation_epoch_end(self, outputs):
@@ -247,22 +241,19 @@ class TestMnist(pl.LightningModule):
         logits = torch.cat([x['logits'] for x in outputs])
         acc = get_cluster_acc(true_labels.cpu().detach().numpy(), predicted_labels.cpu().detach().numpy())
         self.val_results.append({'true_labels' : true_labels, 'predicted_labels' : predicted_labels, 'logits' : logits, 'acc' : acc})
-        #print(val_results)
-        #print(Counter(true_labels.cpu().detach().numpy()))
+        # log to progess bar
         log_dict = {'val_loss' : avg_loss, 'val_acc' : acc}
+        self.log_dict(log_dict, prog_bar=True, logger=False)
         # wandb logger
         self.logger.experiment.log(log_dict, step = self.custom_step, commit=False)
-        self.log_dict(log_dict, prog_bar=True, logger=False)
-
+        
     def prepare_data(self):
         # transforms for images
         transform=transforms.Compose([transforms.ToTensor(), 
-                                    transforms.Normalize((0.1307,), (0.3081,))])
-        
+                                    transforms.Normalize((0.1307,), (0.3081,))])       
         # prepare transforms standard to MNIST
         mnist_train = MNIST(os.getcwd(), train=True, download=True, transform=transform)
-        mnist_test = MNIST(os.getcwd(), train=False, download=True, transform=transform)
-        
+        mnist_test = MNIST(os.getcwd(), train=False, download=True, transform=transform)       
         #self.mnist_train, _ = random_split(mnist_train, [60000, 0])
         #_, self.mnist_val = random_split(mnist_train, [55000, 5000])
         if self.constant_split_val:
@@ -284,7 +275,7 @@ class TestMnist(pl.LightningModule):
         return optimizer
 
 # train
-def train_model(mode_dict, max_epochs = 30, batch_size = 100, lr = 1e-4, loss_type = 'distance', constant_split_val = True, deterministic=False):
+def train_model(max_epoch, mode_dict, batch_size = 100, lr = 1e-4, loss_type = 'distance', constant_split_val = True, deterministic=False):
     model = TestMnist(batch_size, mode_dict=mode_dict, lr=lr, loss_type=loss_type, constant_split_val = constant_split_val)
 
     model_save_dir = '/content/gdrive/My Drive/PUSHMI/saved_models/'
@@ -317,7 +308,7 @@ def train_model(mode_dict, max_epochs = 30, batch_size = 100, lr = 1e-4, loss_ty
     trainer.fit(model)
     return model
 
-def train_n_models(num_models, mode_dict, max_epochs = 30, batch_size = 100, lr = 1e-4, loss_type='distance', deterministic=False, constant_split_val = False, seed_number = 666):
+def train_n_models(num_models, max_epochs, mode_dict, batch_size = 100, lr = 1e-4, loss_type='distance', deterministic=False, constant_split_val = False, seed_number = 666):
     models = []
     #if use_one_seed:
     #    #print('Seeding')
@@ -327,7 +318,7 @@ def train_n_models(num_models, mode_dict, max_epochs = 30, batch_size = 100, lr 
     else:
         constant_split_val = False
     for i in range(num_models):
-        model = train_model(mode_dict=mode_dict, batch_size=batch_size, lr=lr, loss_type=loss_type, max_epochs=max_epochs, deterministic=deterministic)
+        model = train_model(batch_size=batch_size, mode_dict=mode_dict, lr=lr, loss_type=loss_type, max_epochs=max_epochs, deterministic=deterministic)
         model.eval()
         models.append(model)
     return models
