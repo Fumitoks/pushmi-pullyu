@@ -1,0 +1,111 @@
+
+  | Name | Type       | Params
+------------------------------------
+0 | net  | SimpleConv | 3.2 M 
+------------------------------------
+3.2 M     Trainable params
+0         Non-trainable params
+3.2 M     Total params
+/usr/local/lib/python3.6/dist-packages/torchvision/transforms/functional_tensor.py:876: UserWarning: Argument fill/fillcolor is not supported for Tensor input. Fill value is zero
+  warnings.warn("Argument fill/fillcolor is not supported for Tensor input. Fill value is zero")
+Epoch 0, global step 274: val_loss reached 0.55218 (best 0.55218), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 1, global step 549: val_loss reached 0.41569 (best 0.41569), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 2, global step 824: val_loss reached 0.35601 (best 0.35601), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 3, global step 1099: val_loss reached 0.31669 (best 0.31669), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 4, global step 1374: val_loss reached 0.27620 (best 0.27620), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 5, global step 1649: val_loss reached 0.23340 (best 0.23340), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 6, step 1924: val_loss was not in top 1
+Epoch 7, global step 2199: val_loss reached 0.21058 (best 0.21058), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 8, global step 2474: val_loss reached 0.20891 (best 0.20891), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 9, global step 2749: val_loss reached 0.20179 (best 0.20179), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 10, global step 3024: val_loss reached 0.17451 (best 0.17451), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 11, step 3299: val_loss was not in top 1
+Epoch 12, global step 3574: val_loss reached 0.17281 (best 0.17281), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 13, global step 3849: val_loss reached 0.16852 (best 0.16852), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 14, step 4124: val_loss was not in top 1
+Epoch 15, global step 4399: val_loss reached 0.16197 (best 0.16197), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 16, global step 4674: val_loss reached 0.15877 (best 0.15877), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 17, step 4949: val_loss was not in top 1
+Epoch 18, global step 5224: val_loss reached 0.15336 (best 0.15336), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 19, step 5499: val_loss was not in top 1
+Epoch 20, step 5774: val_loss was not in top 1
+Epoch 21, global step 6049: val_loss reached 0.14396 (best 0.14396), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 22, step 6324: val_loss was not in top 1
+Epoch 23, step 6599: val_loss was not in top 1
+Epoch 24, global step 6874: val_loss reached 0.13755 (best 0.13755), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 25, step 7149: val_loss was not in top 1
+Epoch 26, step 7424: val_loss was not in top 1
+Epoch 27, global step 7699: val_loss reached 0.13478 (best 0.13478), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 28, step 7974: val_loss was not in top 1
+Epoch 29, step 8249: val_loss was not in top 1
+Epoch 30, global step 8524: val_loss reached 0.13192 (best 0.13192), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 31, step 8799: val_loss was not in top 1
+Epoch 32, step 9074: val_loss was not in top 1
+Epoch 33, global step 9349: val_loss reached 0.13054 (best 0.13054), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 34, step 9624: val_loss was not in top 1
+Epoch 35, global step 9899: val_loss reached 0.12831 (best 0.12831), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 36, step 10174: val_loss was not in top 1
+Epoch 37, step 10449: val_loss was not in top 1
+Epoch 38, global step 10724: val_loss reached 0.12322 (best 0.12322), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 39, step 10999: val_loss was not in top 1
+Epoch 40, step 11274: val_loss was not in top 1
+Epoch 41, step 11549: val_loss was not in top 1
+Epoch 42, step 11824: val_loss was not in top 1
+Epoch 43, global step 12099: val_loss reached 0.11752 (best 0.11752), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 44, step 12374: val_loss was not in top 1
+Epoch 45, step 12649: val_loss was not in top 1
+Epoch 46, step 12924: val_loss was not in top 1
+Epoch 47, step 13199: val_loss was not in top 1
+Epoch 48, step 13474: val_loss was not in top 1
+Epoch 49, step 13749: val_loss was not in top 1
+Epoch 50, step 14024: val_loss was not in top 1
+Epoch 51, global step 14299: val_loss reached 0.11728 (best 0.11728), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 52, global step 14574: val_loss reached 0.11231 (best 0.11231), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 53, step 14849: val_loss was not in top 1
+Epoch 54, step 15124: val_loss was not in top 1
+Epoch 55, global step 15399: val_loss reached 0.10923 (best 0.10923), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 56, step 15674: val_loss was not in top 1
+Epoch 57, step 15949: val_loss was not in top 1
+Epoch 58, step 16224: val_loss was not in top 1
+Epoch 59, step 16499: val_loss was not in top 1
+Epoch 60, step 16774: val_loss was not in top 1
+Epoch 61, step 17049: val_loss was not in top 1
+Epoch 62, step 17324: val_loss was not in top 1
+Epoch 63, global step 17599: val_loss reached 0.10835 (best 0.10835), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 64, step 17874: val_loss was not in top 1
+Epoch 65, step 18149: val_loss was not in top 1
+Epoch 66, step 18424: val_loss was not in top 1
+Epoch 67, step 18699: val_loss was not in top 1
+Epoch 68, step 18974: val_loss was not in top 1
+Epoch 69, step 19249: val_loss was not in top 1
+Epoch 70, global step 19524: val_loss reached 0.10579 (best 0.10579), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 71, step 19799: val_loss was not in top 1
+Epoch 72, step 20074: val_loss was not in top 1
+Epoch 73, step 20349: val_loss was not in top 1
+Epoch 74, step 20624: val_loss was not in top 1
+Epoch 75, step 20899: val_loss was not in top 1
+Epoch 76, global step 21174: val_loss reached 0.10375 (best 0.10375), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 77, step 21449: val_loss was not in top 1
+Epoch 78, step 21724: val_loss was not in top 1
+Epoch 79, step 21999: val_loss was not in top 1
+Epoch 80, step 22274: val_loss was not in top 1
+Epoch 81, step 22549: val_loss was not in top 1
+Epoch 82, step 22824: val_loss was not in top 1
+Epoch 83, global step 23099: val_loss reached 0.10114 (best 0.10114), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 84, step 23374: val_loss was not in top 1
+Epoch 85, global step 23649: val_loss reached 0.09441 (best 0.09441), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 86, step 23924: val_loss was not in top 1
+Epoch 87, step 24199: val_loss was not in top 1
+Epoch 88, step 24474: val_loss was not in top 1
+Epoch 89, step 24749: val_loss was not in top 1
+Epoch 90, step 25024: val_loss was not in top 1
+Epoch 91, step 25299: val_loss was not in top 1
+Epoch 92, step 25574: val_loss was not in top 1
+Epoch 93, global step 25849: val_loss reached 0.09243 (best 0.09243), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 94, step 26124: val_loss was not in top 1
+Epoch 95, step 26399: val_loss was not in top 1
+Epoch 96, step 26674: val_loss was not in top 1
+Epoch 97, global step 26949: val_loss reached 0.09111 (best 0.09111), saving model to "/content/gdrive/My Drive/PUSHMI/saved_models/distance_200_1e-04/model.ckpt" as top 1
+Epoch 98, step 27224: val_loss was not in top 1
+Epoch 99, step 27499: val_loss was not in top 1
+
